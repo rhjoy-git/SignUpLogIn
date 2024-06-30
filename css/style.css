@@ -236,13 +236,15 @@ h2 {
 
 .main {
   background: #f8f8f8;
-  padding: 150px 0;
 }
 
 .clear {
   clear: both;
 }
-
+html, body {
+  height: 100%;
+  margin: 0;
+}
 body {
   font-size: 13px;
   line-height: 1.8;
@@ -250,6 +252,9 @@ body {
   background: #f8f8f8;
   font-weight: 400;
   font-family: Poppins;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
@@ -305,11 +310,18 @@ body {
   -ms-transform: translate(-50%, -50%);
 }
 
-.signup {
-  margin-bottom: 150px;
+.signup{
+  display: none;
 }
 
-.signup-content {
+.warning {
+  color: red;
+}
+.signup, .sign-in {
+  margin: 0;
+}
+
+.signup-content{
   padding: 75px 0;
 }
 
