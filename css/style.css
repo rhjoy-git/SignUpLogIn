@@ -788,6 +788,7 @@ label.valid:after {
 
   .social-login {
     margin-top: 30px;
+    flex-direction: column;
   }
 
   .social-label {
