@@ -32,7 +32,7 @@ if (isset($_POST["submit"])) {
     $stmt->bind_param("sss", $name, $email, $hash_password);
 
     if ($stmt->execute()) {
-        echo "Login Succesful";
+        echo "Registration Succesful";
     } else {
         echo "Error " . $stmt->error;
     }
