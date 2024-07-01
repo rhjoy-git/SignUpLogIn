@@ -17,23 +17,23 @@ document.addEventListener("DOMContentLoaded", function () {
         signInSection.style.display = "block";
     });
 
-const registerForm = document.getElementById("register-form");
-            registerForm.addEventListener("submit", function (e) {
-                const password = document.getElementById("pass").value;
-                const rePass = document.getElementById("re_pass").value;
-                const warning = document.getElementById("warning");
+// const registerForm = document.getElementById("register-form");
+//             registerForm.addEventListener("submit", function (e) {
+//                 const password = document.getElementById("pass").value;
+//                 const rePass = document.getElementById("re_pass").value;
+//                 const warning = document.getElementById("warning");
 
-                const strongPasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{6,}$/;
+//                 const strongPasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{6,}$/;
 
-                if (password !== rePass) {
-                    e.preventDefault();
-                    warning.textContent = "Passwords do not match!";
-                } else if (!strongPasswordPattern.test(password)) {
-                    e.preventDefault();
-                    warning.textContent = "Password must be at least 6 characters long and include a mix of uppercase, lowercase, numbers, and special characters.";
-                } else {
-                    warning.textContent = "";
-                }
-            });
+//                 if (password !== rePass) {
+//                     e.preventDefault();
+//                     warning.textContent = "Passwords do not match!";
+//                 } else if (!strongPasswordPattern.test(password)) {
+//                     e.preventDefault();
+//                     warning.textContent = "Password must be at least 6 characters long and include a mix of uppercase, lowercase, numbers, and special characters.";
+//                 } else {
+//                     warning.textContent = "";
+//                 }
+//             });
 
 });

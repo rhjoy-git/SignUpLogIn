@@ -1,39 +1,41 @@
 <?php
-include("config.php");
-// SQL to create table if it doesn't exist
-$sql = "CREATE TABLE IF NOT EXISTS users (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30) NOT NULL,
-    email VARCHAR(50),
-    password VARCHAR(255) NOT NULL,
-    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-)";
+include("./config.php");
 
-if ($conn->query($sql) === TRUE) {
-    echo "Table users created successfully";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
+if (isset($_POST["submit"])) {
+    // Get form data and sanitize it
+    $name = htmlspecialchars(trim($_POST["name"]));
+    $password = htmlspecialchars(trim($_POST["password"]));
+    $email = htmlspecialchars(trim($_POST["email"]));
+    $agreeTerms = isset($_POST['terms']) ? $_POST['terms'] : '';
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    // Escape input for SQL injection prevention
+    $name = $conn->real_escape_string($name);
+    $email = $conn->real_escape_string($email);
+    $password = $conn->real_escape_string($password);
 
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $username, $email, $password);
+    $sql = "SELECT id FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-    if ($stmt->execute()) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $stmt->error;
+    if ($stmt->num_rows > 0) {
+        die("Email already exits: ");
     }
 
+    // Hash the password
+    $hash_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Insert user into the database
+    $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $name, $email, $hash_password);
+
+    if ($stmt->execute()) {
+        echo "Login Succesful";
+    } else {
+        echo "Error " . $stmt->error;
+    }
     $stmt->close();
+    $conn->close();
 }
-
-$conn->close();
-
-
-?>
